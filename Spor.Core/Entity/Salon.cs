@@ -10,9 +10,8 @@ namespace Spor.Core.Entity
     {
         public int id { get; set; }
         public string SalonAdi { get; set; }
-        public int KullaniciID { get; set; }
+        public string KullaniciAdi { get; set; }
 
-        public virtual Kullanici Kullanicis { get; set; }
-
+        public virtual List<Organizasyon> Organizasyonlar { get; set; }
     }
 }

@@ -6,16 +6,17 @@ using System.Threading.Tasks;
 
 namespace Spor.Core.Entity
 {
-    class Organizasyon
+    public class Organizasyon
     {
         public int id { get; set; }
-        public int KullaniciID { get; set; }
+        public string KullaniciAdi { get; set; }
         public int SalonID { get; set; }
-
+        public string OrganizasyonAdi { get; set; }
+        public DateTime Tarih { get; set; }
+        public string Saat { get; set; }
+        public string Yer { get; set; }
+        public string Adres { get; set; }
+        public bool Durum { get; set; }
         public virtual Salon Salonlar { get; set; }
-        public virtual Kullanici Kullanicilar { get; set; }
-
-        //List<Salon> Salonlar { get; set; }
-        //List<Kullanici> Kullanicilar { get; set; }
     }
 }

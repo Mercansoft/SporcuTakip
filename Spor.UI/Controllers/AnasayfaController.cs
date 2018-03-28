@@ -6,9 +6,10 @@ using System.Web.Mvc;
 
 namespace Spor.UI.Controllers
 {
+    [Authorize]
     public class AnasayfaController : Controller
     {
-        // GET: Anasayfa
+        
         public ActionResult Index()
         {
             return View();

@@ -5,13 +5,21 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Security;
 
 namespace Spor.Core.Context
 {
-    class MyDbContext
+    public class MyDbContext : DbContext
     {
-        DbSet<Kullanici> Kullanicis { get; set; }
-        DbSet<Organizasyon> Organizasyons { get; set; }
-        DbSet<Salon> Salons { get; set; }
+        public MyDbContext() {
+            //Database.SetInitializer<MyDbContext>(new DropCreateDatabaseIfModelChanges<MyDbContext>());
+            //Database.SetInitializer(new DropCreateDatabaseAlways<MyDbContext>());
+            Database.Initialize(true);
+
+        }
+        public DbSet<Kullanici> Kullanicilar { get; set; }
+        public DbSet<Organizasyon> Organizasyonlar { get; set; }
+        public DbSet<Salon> Salonlar { get; set; }
+        public DbSet<Ayar> Ayarlar { get; set; }
     }
 }

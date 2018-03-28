@@ -1,0 +1,173 @@
+﻿@model Spor.Core.Entity.Kullanici
+@{
+    ViewBag.Title = "Duzenle";
+    Layout = "~/Views/Tasarim/_Layout.cshtml";
+}
+
+
+
+<div class="right_col" role="main">
+    <div class="">
+
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Kullanıcı Güncelleme Paneli <small>different form elements</small></h2><br />
+                                                                                                   <p style="color:red; font-size:large">
+                                                                                                       @if (ViewBag.Durum != null)
+                                                                                                       {
+                                                                                                   @Html.Raw(ViewBag.Durum)
+}
+                                                                                                   </p>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li>
+                                <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li>
+                                        <a href="#">Settings 1</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Settings 2</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a class="close-link"><i class="fa fa-close"></i></a>
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <br />
+                        <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" action="/Kullanici/Duzenle" method="post" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <img src="@Model.Resim" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
+                                    Resim Yükleyin <span class="required">*</span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input type="file" id="first-name" class="form-control col-md-7 col-xs-12" name="Resim">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Yetki Derecesi</label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <select class="form-control" name="RolAdi">
+
+                                        @*@Html.DropDownList("RoleId", (List<SelectListItem>)ViewBag.Rol, new { @class = "form-control" })*@
+                                        @foreach (string item in ViewBag.Rol)
+                                        {
+                        <option value="@item">@item</option>
+
+}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
+                                    Adı Soyadı <span class="required">*</span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12" name="AdSoyad" value="@Model.AdSoyad">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">
+                                    E-Mail Adresi <span class="required">*</span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input type="text" id="last-name" name="Email" required="required" class="form-control col-md-7 col-xs-12" value="@Model.Email">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">
+                                    Telefon Numarası <span class="required">*</span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input type="text" id="last-name" name="Telefon" required="required" class="form-control col-md-7 col-xs-12" value="@Model.Telefon">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                    Doğum Tarihi <span class="required">*</span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input id="birthday" class="date-picker form-control col-md-7 col-xs-12" required="required" type="text" name="DogumTarihi" value="@Model.DogumTarihi">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                    Adres <span class="required">*</span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <textarea class="form-control" rows="3" placeholder="Adres" name="Adres">@Model.Adres</textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Kullanıcı Adı</label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input id="middle-name" class="form-control col-md-7 col-xs-12" type="text" name="KullaniciAdi" readonly="readonly" value="@Model.KullaniciAdi">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Şifre</label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input id="middle-name" class="form-control col-md-7 col-xs-12" type="text" name="Sifre" value="@Model.Sifre">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Gizli Soru</label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input id="middle-name" class="form-control col-md-7 col-xs-12" type="text" name="GizliSoru" value="@Model.GizliSoru">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Gizli Cevap</label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input id="middle-name" class="form-control col-md-7 col-xs-12" type="text" name="GizliCevap" value="@Model.GizliCevap">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Onay Durumu</label>
+                                <div class="col-md-9 col-sm-9 col-xs-12">
+                                    <div class="">
+                                        <label>
+                                            @{
+                                                if (Model.Onay)
+                                                {
+                                        <input type="checkbox" class="js-switch" name="Onay" checked /> 
+                                                }
+                                                else
+                                                {
+    <input type="checkbox" class="js-switch" name="Onay" />
+                                                    }
+                                                }
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ln_solid"></div>
+                            <div class="form-group">
+                                <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                    <button type="submit" class="btn btn-success">Gönder</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
