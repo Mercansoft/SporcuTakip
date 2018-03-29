@@ -1,19 +1,26 @@
-﻿
+﻿@model Spor.Core.Entity.Kullanici
 @{
-    ViewBag.Title = "SporcuEkle";
+    ViewBag.Title = "Profil";
     Layout = "~/Views/Tasarim/_Layout.cshtml";
 }
 
 
+
 <div class="right_col" role="main">
     <div class="">
+
         <div class="clearfix"></div>
         <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                     <div class="x_title">
-                        <h2>Sporcu Kayıt Paneli <small>Sporcu kaydı</small></h2><br />
-                        <p style="color:red; font-size:large"> @Html.Raw(ViewBag.Durum) </p>
+                        <h2>Profil Güncelleme Paneli <small>Profiliniz</small></h2><br />
+                        <p style="color:red; font-size:large">
+                            @if (ViewBag.Durum != null)
+                            {
+                                @Html.Raw(ViewBag.Durum)
+                            }
+                        </p>
                         <ul class="nav navbar-right panel_toolbox">
                             <li>
                                 <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -37,13 +44,20 @@
                     </div>
                     <div class="x_content">
                         <br />
-                        <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" action="/Kullanici/SporcuEkle" method="post" enctype="multipart/form-data">
+                        <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" action="/Kullanici/Profil" method="post" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <img src="@Model.Resim" width="250" height="300" />
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
                                     Resim Yükleyin <span class="required">*</span>
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input type="file" id="first-name" required="required" class="form-control col-md-7 col-xs-12" name="Resim">
+                                    <input type="file" id="first-name" class="form-control col-md-7 col-xs-12" name="Resim">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -51,7 +65,7 @@
                                     Adı Soyadı <span class="required">*</span>
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12" name="AdSoyad">
+                                    <input type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12" name="AdSoyad" value="@Model.AdSoyad">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -59,7 +73,7 @@
                                     E-Mail Adresi <span class="required">*</span>
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input type="text" id="last-name" name="Email" required="required" class="form-control col-md-7 col-xs-12">
+                                    <input type="text" id="last-name" name="Email" required="required" class="form-control col-md-7 col-xs-12" value="@Model.Email">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -67,7 +81,7 @@
                                     Telefon Numarası <span class="required">*</span>
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input type="text" id="last-name" name="Telefon" required="required" class="form-control col-md-7 col-xs-12">
+                                    <input type="text" id="last-name" name="Telefon" required="required" class="form-control col-md-7 col-xs-12" value="@Model.Telefon">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -75,7 +89,7 @@
                                     Doğum Tarihi <span class="required">*</span>
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input id="birthday" class="date-picker form-control col-md-7 col-xs-12" required="required" type="text" name="DogumTarihi">
+                                    <input id="birthday" class="date-picker form-control col-md-7 col-xs-12" required="required" type="text" name="DogumTarihi" value="@Model.DogumTarihi.ToShortDateString()">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -83,31 +97,19 @@
                                     Adres <span class="required">*</span>
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <textarea class="form-control" rows="3" placeholder="Adres" name="Adres"></textarea>
+                                    <textarea class="form-control" rows="3" placeholder="Adres" name="Adres">@Model.Adres</textarea>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Kullanıcı Adı</label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input id="middle-name" class="form-control col-md-7 col-xs-12" type="text" name="KullaniciAdi">
+                                    <input id="middle-name" class="form-control col-md-7 col-xs-12" type="text" name="KullaniciAdi" readonly="readonly" value="@Model.KullaniciAdi">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Şifre</label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input id="middle-name" class="form-control col-md-7 col-xs-12" type="text" name="Sifre">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Gizli Soru</label>
-                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input id="middle-name" class="form-control col-md-7 col-xs-12" type="text" name="GizliSoru">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Gizli Cevap</label>
-                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input id="middle-name" class="form-control col-md-7 col-xs-12" type="text" name="GizliCevap">
+                                    <input id="middle-name" class="form-control col-md-7 col-xs-12" type="text" name="Sifre" value="@Model.Sifre">
                                 </div>
                             </div>
                             <div class="ln_solid"></div>
@@ -123,8 +125,6 @@
         </div>
     </div>
 </div>
-
-
 
 
 

@@ -18,6 +18,15 @@ namespace Spor.UI.Controllers
         {
             return View(_ClsOrganizasyon._Liste(User.Identity.Name.ToString()));
         }
+        [Authorize(Roles = "Admin,Moderatör,Kullanıcı")]
+        public ActionResult Liste()
+        {
+            using (MyDbContext db = new MyDbContext())
+            {
+                Kullanici k = db.Kullanicilar.Where(x => x.KullaniciAdi == User.Identity.Name.ToString()).SingleOrDefault();
+            return View(_ClsOrganizasyon._Liste(k.AdminName.ToString()));
+            }
+        }
         [Authorize(Roles = "Admin,Moderatör")]
         public ActionResult Sil(string id)
         {
@@ -28,7 +37,7 @@ namespace Spor.UI.Controllers
         public ActionResult Ekle()
         {
             MyDbContext db = new MyDbContext();
-            var query = db.Salonlar.Select(c => new { c.id, c.SalonAdi });
+            var query = db.Salonlar.Where(x => x.KullaniciAdi==User.Identity.Name).Select(c => new { c.id, c.SalonAdi });
             ViewBag.Salon = new SelectList(query.AsEnumerable(), "id", "SalonAdi");
 
             return View();
@@ -45,6 +54,10 @@ namespace Spor.UI.Controllers
         [Authorize(Roles = "Admin,Moderatör")]
         public ActionResult Duzenle(int id)
         {
+            MyDbContext db = new MyDbContext();
+            var query = db.Salonlar.Select(c => new { c.id, c.SalonAdi });
+            ViewBag.Salon = new SelectList(query.AsEnumerable(), "id", "SalonAdi");
+
             Organizasyon o = _ClsOrganizasyon._GetirID(id);
             return View(o);
         }
@@ -52,8 +65,11 @@ namespace Spor.UI.Controllers
         [HttpPost]
         public ActionResult Duzenle(Organizasyon o)
         {
-            _ClsOrganizasyon._Guncelle(o);
-            return RedirectToAction("Index", "Organizasyon");
+            string durum= _ClsOrganizasyon._Guncelle(o);
+            ViewData["Durum"] = "<script>alert('" + durum + "');</script>";
+           // Session["Durum"]= "<script>alert('"+ durum + "');</script>";
+
+            return Redirect("/Organizasyon/Duzenle/"+o.id);
         }
     }
 }

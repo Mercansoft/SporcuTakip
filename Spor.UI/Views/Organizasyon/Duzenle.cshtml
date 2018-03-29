@@ -1,19 +1,20 @@
-﻿
+﻿@model Spor.Core.Entity.Organizasyon
 @{
-    ViewBag.Title = "SporcuEkle";
+    ViewBag.Title = "Duzenle";
     Layout = "~/Views/Tasarim/_Layout.cshtml";
 }
 
 
 <div class="right_col" role="main">
     <div class="">
+
         <div class="clearfix"></div>
         <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                     <div class="x_title">
-                        <h2>Sporcu Kayıt Paneli <small>Sporcu kaydı</small></h2><br />
-                        <p style="color:red; font-size:large"> @Html.Raw(ViewBag.Durum) </p>
+                        <h2>Organizasyon Güncelleme Paneli <small>Organizasyon</small></h2><br />
+                        <p style="color:red; font-size:large"> @Html.Raw(ViewData["Durum"]) </p>
                         <ul class="nav navbar-right panel_toolbox">
                             <li>
                                 <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -37,77 +38,52 @@
                     </div>
                     <div class="x_content">
                         <br />
-                        <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" action="/Kullanici/SporcuEkle" method="post" enctype="multipart/form-data">
+                        <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" action="/Organizasyon/Duzenle" method="post">
+                            <input hidden="hidden" name="id" value="@Model.id" />
                             <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
-                                    Resim Yükleyin <span class="required">*</span>
-                                </label>
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Salonlar</label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input type="file" id="first-name" required="required" class="form-control col-md-7 col-xs-12" name="Resim">
+                                    @Html.DropDownList("SalonID", (SelectList)ViewBag.Salon, new { @class = "form-control" })
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
-                                    Adı Soyadı <span class="required">*</span>
+                                    Organizasyon Adı <span class="required">*</span>
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12" name="AdSoyad">
+                                    <input type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12" name="OrganizasyonAdi" value="@Model.OrganizasyonAdi">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">
-                                    E-Mail Adresi <span class="required">*</span>
+                                    Organizasyon Tarihi <span class="required">*</span>
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input type="text" id="last-name" name="Email" required="required" class="form-control col-md-7 col-xs-12">
+                                    <input type="text" id="last-name" name="Tarih" required="required" class="form-control col-md-7 col-xs-12" value="@Model.Tarih.ToShortDateString()">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">
-                                    Telefon Numarası <span class="required">*</span>
+                                    Organizasyon Saati
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input type="text" id="last-name" name="Telefon" required="required" class="form-control col-md-7 col-xs-12">
+                                    <input type="text" id="last-name" name="Saat" class="form-control col-md-7 col-xs-12" value="@Model.Saat">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                                    Doğum Tarihi <span class="required">*</span>
+                                    Organizasyon Yeri <span class="required">*</span>
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input id="birthday" class="date-picker form-control col-md-7 col-xs-12" required="required" type="text" name="DogumTarihi">
+                                    <input id="birthday" class="date-picker form-control col-md-7 col-xs-12" required="required" type="text" name="Yer" value="@Model.Yer">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                                    Adres <span class="required">*</span>
+                                    Adres
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <textarea class="form-control" rows="3" placeholder="Adres" name="Adres"></textarea>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Kullanıcı Adı</label>
-                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input id="middle-name" class="form-control col-md-7 col-xs-12" type="text" name="KullaniciAdi">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Şifre</label>
-                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input id="middle-name" class="form-control col-md-7 col-xs-12" type="text" name="Sifre">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Gizli Soru</label>
-                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input id="middle-name" class="form-control col-md-7 col-xs-12" type="text" name="GizliSoru">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Gizli Cevap</label>
-                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input id="middle-name" class="form-control col-md-7 col-xs-12" type="text" name="GizliCevap">
+                                    <textarea class="form-control" rows="3" placeholder="Adres" name="Adres">@Model.Adres</textarea>
                                 </div>
                             </div>
                             <div class="ln_solid"></div>
@@ -123,6 +99,7 @@
         </div>
     </div>
 </div>
+
 
 
 

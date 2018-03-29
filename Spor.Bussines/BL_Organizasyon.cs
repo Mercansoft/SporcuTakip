@@ -19,7 +19,7 @@ namespace Spor.Bussines
         }
         public object _Liste(string User)
         {
-            var model = db.Organizasyonlar.Where(x => x.KullaniciAdi == User).ToList();
+            var model = db.Organizasyonlar.Where(x => x.KullaniciAdi == User && x.Durum==true).ToList();
             return model;
         }
         public void _Sil(string id)
@@ -32,18 +32,35 @@ namespace Spor.Bussines
                 db.SaveChanges();
             }
         }
-        public void _Guncelle(Organizasyon o)
+        public string _Guncelle(Organizasyon o)
         {
             Organizasyon model = db.Organizasyonlar.Find(o.id);
-            model.Adres = o.Adres;
-            model.OrganizasyonAdi = o.OrganizasyonAdi;
-            model.Saat = o.Saat;
-            model.SalonID = o.SalonID;
-            model.Tarih = o.Tarih;
-            model.Yer = o.Yer;
-            db.Entry(model).State = EntityState.Modified;
-
+            string durum = "";
+            try
+            {
+                model.Adres = o.Adres;
+                model.OrganizasyonAdi = o.OrganizasyonAdi;
+                model.Saat = o.Saat;
+                model.SalonID = o.SalonID;
+                model.Tarih = o.Tarih;
+                model.Yer = o.Yer;
+                db.SaveChanges();
+                durum = "Başarıyla Güncellendi.";
+            }
+            catch (Exception ex)
+            {
+                durum = "Güncelleme Hatası - ["+ex.Message.ToString()+"]";
+            }
+            return durum;
         }
         public Organizasyon _GetirID(int id) { Organizasyon model = db.Organizasyonlar.Find(id); return model; }
+        public string _ToplamOrganizasyonSayisi(string Klup)
+        {
+            using (MyDbContext db = new MyDbContext())
+            {
+                var model = db.Organizasyonlar.Where(x => x.KullaniciAdi == Klup).ToList();
+                return model.Count.ToString();
+            }
+        }
     }
 }

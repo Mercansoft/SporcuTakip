@@ -26,7 +26,7 @@ namespace Spor.UI
                     }
                     if (Membership.GetUser("Admin") == null)
                     {
-                        Membership.CreateUser("Admin", "Admin");
+                        Membership.CreateUser("Admin", "@q1w2e3Aa");
                         Roles.AddUserToRole("Admin", "Admin");
                     }
                     MembershipUser mu = Membership.GetUser("Admin");
@@ -36,6 +36,29 @@ namespace Spor.UI
                     Kullanicis.Email = "admin@admin.com";
                     Kullanicis.AdminName = mu.UserName;
                     db.Kullanicilar.Add(Kullanicis);
+                }
+            }
+            catch (Exception)
+            {
+
+            }
+            try
+            {
+                using (MyDbContext db = new MyDbContext())
+                {
+                    Ayar a = db.Ayarlar.SingleOrDefault();
+                    if (a==null)
+                    {
+                        Ayar model = new Ayar();
+                        model.Email = "deneme@deneme.com";
+                        model.Port = 587;
+                        model.Sifre = "deneme";
+                        model.SmtpSunucu = "smtp.deneme.com";
+                        model.Telefon = "05343716661";
+                        model.Title = "SporMAX Sporcu Yönetim Sistemi";
+                        db.Ayarlar.Add(model);
+                        db.SaveChanges();
+                    }
                 }
             }
             catch (Exception)

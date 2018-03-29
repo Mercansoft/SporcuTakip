@@ -37,7 +37,15 @@ namespace Spor.UI.Controllers
                     FormsAuthentication.RedirectFromLoginPage(k.KullaniciAdi, false);
                     
                 }
-                return RedirectToAction("Index", "Anasayfa");
+               string[] rols= Roles.GetRolesForUser(k.KullaniciAdi);
+                if (rols[0].ToString()=="Kullanıcı")
+                {
+                    return RedirectToAction("Liste", "Organizasyon");
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Anasayfa");
+                }                
             }
             else
             {
@@ -71,7 +79,7 @@ namespace Spor.UI.Controllers
                 img.Resize(800, 350);
                 string yol = Server.MapPath("/Uploads/Kullanici/" + newfoto);
                 img.Save(yol);
-                k.Resim = yol;
+                k.Resim = "/Uploads/Kullanici/" + newfoto;
             }
 
             ViewBag.Durum = m._Ekle(k, RolAdi, LoginID());
@@ -102,7 +110,7 @@ namespace Spor.UI.Controllers
                 img.Resize(800, 350);
                 string yol = Server.MapPath("/Uploads/Kullanici/" + newfoto);
                 img.Save(yol);
-                k.Resim = yol;
+                k.Resim = "/Uploads/Kullanici/" + newfoto;
             }
             if (Onay=="on")
             {
@@ -140,11 +148,18 @@ namespace Spor.UI.Controllers
         {
             if (Membership.DeleteUser(id))
             {
-                using (MyDbContext db = new MyDbContext())
+                try
                 {
-                    Kullanici model = db.Kullanicilar.Where(x => x.KullaniciAdi == id).SingleOrDefault();
-                    db.Kullanicilar.Remove(model);
-                    db.SaveChanges();
+                    using (MyDbContext db = new MyDbContext())
+                    {
+                        Kullanici model = db.Kullanicilar.Where(x => x.KullaniciAdi == id).SingleOrDefault();
+                        db.Kullanicilar.Remove(model);
+                        db.SaveChanges();
+                    }
+                }
+                catch (Exception)
+                {
+
                 }
                 ViewBag.Durum = "Başrıyla Silindi.";
             }
@@ -184,6 +199,16 @@ namespace Spor.UI.Controllers
             }
         }
         [Authorize(Roles = "Admin,Moderatör")]
+        public ActionResult Sporcular()
+        {
+            using (MyDbContext db = new MyDbContext())
+            {
+                var sporcu = db.Kullanicilar.Where(x => x.AdminName == User.Identity.Name).ToList();
+                return View(sporcu);
+            }
+            
+        }
+        [Authorize(Roles = "Admin,Moderatör")]
         public ActionResult SporcuEkle()
         {
             return View();
@@ -201,7 +226,7 @@ namespace Spor.UI.Controllers
                 img.Resize(800, 350);
                 string yol = Server.MapPath("/Uploads/Kullanici/" + newfoto);
                 img.Save(yol);
-                k.Resim = yol;
+                k.Resim = "/Uploads/Kullanici/" + newfoto;
             }
             
             ViewBag.Durum = m._Ekle(k, "Kullanıcı", LoginID());
@@ -213,6 +238,30 @@ namespace Spor.UI.Controllers
            // MembershipUser mu = Membership.GetUser(LoginUserName);
             //string LoginID = mu.ProviderUserKey.ToString();
             return LoginUserName;
+        }
+        public ActionResult Profil() {
+            using (MyDbContext db = new MyDbContext())
+            {
+                Kullanici k = db.Kullanicilar.Where(z => z.KullaniciAdi == User.Identity.Name).SingleOrDefault();
+                return View(k);
+            }}
+        [HttpPost]
+        public ActionResult Profil(Kullanici k, HttpPostedFileBase resim)
+        {
+            BL_Kullanici m = new BL_Kullanici();
+            if (resim != null)
+            {
+                WebImage img = new WebImage(resim.InputStream);
+                FileInfo fotoinfo = new FileInfo(resim.FileName);
+                string newfoto = Guid.NewGuid().ToString() + fotoinfo.Extension;
+                img.Resize(800, 350);
+                string yol = Server.MapPath("/Uploads/Kullanici/" + newfoto);
+                img.Save(yol);
+                k.Resim = "/Uploads/Kullanici/" + newfoto;
+            }
+            k.Onay = true;
+            ViewBag.Durum = m._Duzenle(k);
+            return Redirect("/Kullanici/Profil/"+k.KullaniciAdi);
         }
     }
 }

@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BL_Ayar.cs" />
     <Compile Include="BL_Kullanici.cs" />
     <Compile Include="BL_Organizasyon.cs" />
     <Compile Include="BL_Salon.cs" />

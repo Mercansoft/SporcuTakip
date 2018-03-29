@@ -135,6 +135,43 @@ namespace Spor.Bussines
             }
             return durum;
         }
+        public string _Duzenle(Kullanici k)
+        {
+            string durum = "";
+            MyDbContext db = new MyDbContext();
+
+            MembershipUser user = Membership.GetUser(k.KullaniciAdi);
+
+            bool pwdurum = user.ChangePassword(user.ResetPassword(), k.Sifre);
+            user.Email = k.Email;
+            user.IsApproved = k.Onay;
+
+            Kullanici model = db.Kullanicilar.Where(x => x.KullaniciAdi == user.UserName).SingleOrDefault();
+
+            model.Adres = k.Adres;
+            model.AdSoyad = k.AdSoyad;
+            model.Email = k.Email;
+            model.DogumTarihi = Convert.ToDateTime(k.DogumTarihi);
+            model.KullaniciAdi = k.KullaniciAdi;
+            model.Telefon = k.Telefon;
+            model.GizliCevap = k.GizliCevap;
+            model.GizliSoru = k.GizliSoru;
+            model.Sifre = k.Sifre;
+            model.Onay = k.Onay;
+            model.Resim = k.Resim;
+
+            try
+            {
+                Membership.UpdateUser(user);
+                db.SaveChanges();
+                durum = "Başarıyla Güncellenmiştir.";
+            }
+            catch (Exception)
+            {
+                durum = "Güncelleme Hatası.";
+            }
+            return durum;
+        }
         private void _MusteriDogrulamaMail(string username)
         {
             Ayar ayars = _Ayarlar();
@@ -147,7 +184,7 @@ namespace Spor.Bussines
             string bodyMessage = string.Format("üyeliğiniz başarıyla oluşturulmuştur. Aşağıdaki linke tıkladığınızda hesabınızın aktif olacaktır.\n");
             bodyMessage += verifyUrl;
 
-            var message = new System.Net.Mail.MailMessage(ayars.email, user.Email)
+            var message = new System.Net.Mail.MailMessage(ayars.Email, user.Email)
             {
                 Subject = "Üyeliğinizi doğrulayın.",
                 Body = bodyMessage
@@ -166,5 +203,12 @@ namespace Spor.Bussines
             }
 
         }
+
+        public string _ToplamSporcuSayisi(string Klup) {
+            using (MyDbContext db = new MyDbContext())
+            {
+                var model = db.Kullanicilar.Where(x => x.AdminName == Klup).ToList();
+                return model.Count.ToString(); }
+             }
     }
 }

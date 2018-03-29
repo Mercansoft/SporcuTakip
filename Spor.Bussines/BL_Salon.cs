@@ -41,5 +41,14 @@ namespace Spor.Bussines
 
         }
         public Salon _GetirID(int id) { Salon model = db.Salonlar.Find(id); return model; }
+
+        public string _ToplamSalonSayisi(string Klup)
+        {
+            using (MyDbContext db = new MyDbContext())
+            {
+                var model = db.Salonlar.Where(x => x.KullaniciAdi == Klup).ToList();
+                return model.Count.ToString();
+            }
+        }
     }
 }
