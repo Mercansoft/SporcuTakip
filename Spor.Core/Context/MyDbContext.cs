@@ -14,12 +14,13 @@ namespace Spor.Core.Context
         public MyDbContext() {
             //Database.SetInitializer<MyDbContext>(new DropCreateDatabaseIfModelChanges<MyDbContext>());
             //Database.SetInitializer(new DropCreateDatabaseAlways<MyDbContext>());
-            Database.Initialize(true);
+            //Database.Initialize(true);
 
         }
         public DbSet<Kullanici> Kullanicilar { get; set; }
         public DbSet<Organizasyon> Organizasyonlar { get; set; }
         public DbSet<Salon> Salonlar { get; set; }
         public DbSet<Ayar> Ayarlar { get; set; }
+        public DbSet<Grup> Gruplar { get; set; }
     }
 }

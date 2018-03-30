@@ -20,22 +20,37 @@ namespace Spor.UI
             {
                 using (MyDbContext db = new MyDbContext())
                 {
+                    MembershipCreateStatus status;
                     if (!Roles.RoleExists("Admin"))
                     {
                         Roles.CreateRole("Admin");
                     }
                     if (Membership.GetUser("Admin") == null)
                     {
-                        Membership.CreateUser("Admin", "@q1w2e3Aa");
+                        Membership.CreateUser("Admin", "123456Aa","admin@admin.com","adminsoru","admincevap",true,out status);
                         Roles.AddUserToRole("Admin", "Admin");
                     }
                     MembershipUser mu = Membership.GetUser("Admin");
                     Kullanici Kullanicis = new Kullanici();
-                    Kullanicis.KullaniciAdi = mu.UserName;
-                    Kullanicis.Sifre = mu.GetPassword();
-                    Kullanicis.Email = "admin@admin.com";
-                    Kullanicis.AdminName = mu.UserName;
-                    db.Kullanicilar.Add(Kullanicis);
+                    int say = db.Kullanicilar.ToList().Count;
+                    if (say==0)
+                    {
+                        Kullanicis.KullaniciAdi = mu.UserName;
+                        Kullanicis.Sifre = "123456Aa";
+                        Kullanicis.Email = mu.Email;
+                        Kullanicis.AdminName = mu.UserName;
+                        Kullanicis.AdSoyad = mu.UserName;
+                        Kullanicis.GizliSoru = mu.PasswordQuestion;
+                        Kullanicis.GizliCevap = "admincevap";
+                        Kullanicis.Onay = true;
+                        Kullanicis.Tarih = Convert.ToDateTime(DateTime.Now);
+                        Kullanicis.Adres = "adres";
+                        Kullanicis.DogumTarihi = Convert.ToDateTime(DateTime.Now);
+                        Kullanicis.Resim = "yok";
+                        db.Kullanicilar.Add(Kullanicis);
+                        db.SaveChanges();
+                    }
+
                 }
             }
             catch (Exception)

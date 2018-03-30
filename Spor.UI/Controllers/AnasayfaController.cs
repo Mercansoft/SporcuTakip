@@ -23,8 +23,15 @@ namespace Spor.UI.Controllers
             ViewBag.ToplamSporcu = _cLsKullanici._ToplamSporcuSayisi(User.Identity.Name);
             ViewBag.ToplamSalon = _cLsSalon._ToplamSalonSayisi(User.Identity.Name);
             ViewBag.ToplamOrganizasyon = _cLsOrganizasyon._ToplamOrganizasyonSayisi(User.Identity.Name);
-            string[] klupler = Roles.GetUsersInRole("Moderatör");
-            ViewBag.ToplamKlup = klupler.Length.ToString();
+            try
+            {
+                string[] klupler = Roles.GetUsersInRole("Moderatör");
+                ViewBag.ToplamKlup = klupler.Length.ToString();
+            }
+            catch (Exception)
+            {
+
+            }
             return View();
         }
         public PartialViewResult _SonEklenenSporcular()

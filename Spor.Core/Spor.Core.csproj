@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="Context\MyDbContext.cs" />
     <Compile Include="Entity\Ayar.cs" />
+    <Compile Include="Entity\Grup.cs" />
     <Compile Include="Entity\Kullanici.cs" />
     <Compile Include="Entity\Organizasyon.cs" />
     <Compile Include="Entity\Salon.cs" />

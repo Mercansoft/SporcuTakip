@@ -40,6 +40,9 @@ namespace Spor.UI.Controllers
             var query = db.Salonlar.Where(x => x.KullaniciAdi==User.Identity.Name).Select(c => new { c.id, c.SalonAdi });
             ViewBag.Salon = new SelectList(query.AsEnumerable(), "id", "SalonAdi");
 
+            var query2 = db.Gruplar.Where(x => x.KullaniciAdi == User.Identity.Name).Select(c => new { c.id, c.GrupAdi });
+            ViewBag.Grup = new SelectList(query2.AsEnumerable(), "id", "GrupAdi");
+
             return View();
         }
         [Authorize(Roles = "Admin,Moderatör")]
@@ -55,8 +58,11 @@ namespace Spor.UI.Controllers
         public ActionResult Duzenle(int id)
         {
             MyDbContext db = new MyDbContext();
-            var query = db.Salonlar.Select(c => new { c.id, c.SalonAdi });
+            var query = db.Salonlar.Where(x => x.KullaniciAdi == User.Identity.Name).Select(c => new { c.id, c.SalonAdi });
             ViewBag.Salon = new SelectList(query.AsEnumerable(), "id", "SalonAdi");
+
+            var query2 = db.Gruplar.Where(x => x.KullaniciAdi == User.Identity.Name).Select(c => new { c.id, c.GrupAdi });
+            ViewBag.Grup = new SelectList(query2.AsEnumerable(), "id", "GrupAdi");
 
             Organizasyon o = _ClsOrganizasyon._GetirID(id);
             return View(o);

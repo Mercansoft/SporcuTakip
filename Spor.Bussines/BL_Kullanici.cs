@@ -19,20 +19,23 @@ namespace Spor.Bussines
         private void _EkleDetay(Kullanici k,string LoginID)
         {
             MembershipUser user = Membership.GetUser(k.KullaniciAdi);
-            string guid = user.ProviderUserKey.ToString();
+            //string guid = user.ProviderUserKey.ToString();
             
             Kullanici model = new Kullanici();
-            model.Resim = k.Resim;
+            if (k.Resim != null)
+            {
+                model.Resim = k.Resim;
+            }
             model.Sifre = k.Sifre;
             model.GizliCevap = k.GizliCevap;
             model.GizliSoru = k.GizliSoru;
             model.Tarih = Convert.ToDateTime(user.CreationDate);
             model.DogumTarihi = Convert.ToDateTime(k.DogumTarihi);
             model.Adres = k.Adres;
+            model.GrupID = k.GrupID;
             model.AdSoyad = k.AdSoyad;
             model.Telefon = k.Telefon;
             model.Email = k.Email;
-            model.AdminName = guid;
             model.KullaniciAdi = k.KullaniciAdi;
             model.AdminName = LoginID;
             model.Onay = true;
@@ -118,8 +121,13 @@ namespace Spor.Bussines
             model.Telefon = k.Telefon;
             model.GizliCevap = k.GizliCevap;
             model.GizliSoru = k.GizliSoru;
+            model.GrupID = k.GrupID;
             model.Sifre = k.Sifre;
             model.Onay = k.Onay;
+            if (k.Resim != null)
+            {
+                model.Resim = k.Resim;
+            }
 
             try
             {
@@ -155,10 +163,14 @@ namespace Spor.Bussines
             model.KullaniciAdi = k.KullaniciAdi;
             model.Telefon = k.Telefon;
             model.GizliCevap = k.GizliCevap;
+            model.GrupID = k.GrupID;
             model.GizliSoru = k.GizliSoru;
             model.Sifre = k.Sifre;
             model.Onay = k.Onay;
-            model.Resim = k.Resim;
+            if (k.Resim!=null)
+            {
+                model.Resim = k.Resim;
+            }
 
             try
             {

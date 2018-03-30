@@ -1,13 +1,9 @@
 namespace Spor.Core.Migrations
 {
-    using Spor.Core.Context;
-    using Spor.Core.Entity;
     using System;
-    using System.Collections.Generic;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
-    using System.Web.Security;
 
     internal sealed class Configuration : DbMigrationsConfiguration<Spor.Core.Context.MyDbContext>
     {
@@ -22,8 +18,6 @@ namespace Spor.Core.Migrations
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data.
-               
-            }
         }
     }
-
+}

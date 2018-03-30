@@ -11,6 +11,7 @@ namespace Spor.Core.Entity
         public int id { get; set; }
         public string KullaniciAdi { get; set; }
         public int SalonID { get; set; }
+        public int GrupID { get; set; }
         public string OrganizasyonAdi { get; set; }
         public DateTime Tarih { get; set; }
         public string Saat { get; set; }
@@ -18,5 +19,6 @@ namespace Spor.Core.Entity
         public string Adres { get; set; }
         public bool Durum { get; set; }
         public virtual Salon Salonlar { get; set; }
+        public virtual Grup Gruplar { get; set; }
     }
 }

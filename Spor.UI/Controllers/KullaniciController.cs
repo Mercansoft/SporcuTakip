@@ -97,7 +97,7 @@ namespace Spor.UI.Controllers
             }
 
         }
-        [Authorize(Roles ="Admin,Moderatör")]
+        [Authorize(Roles ="Admin")]
         [HttpPost]
         public ActionResult Duzenle(Kullanici k, string RolAdi, string Onay, HttpPostedFileBase resim)
         {
@@ -211,6 +211,9 @@ namespace Spor.UI.Controllers
         [Authorize(Roles = "Admin,Moderatör")]
         public ActionResult SporcuEkle()
         {
+            MyDbContext db = new MyDbContext();
+            var query = db.Gruplar.Where(x => x.KullaniciAdi == User.Identity.Name).Select(c => new { c.id, c.GrupAdi });
+            ViewBag.Grup = new SelectList(query.AsEnumerable(), "id", "GrupAdi");
             return View();
         }
         [Authorize(Roles = "Admin,Moderatör")]
@@ -230,7 +233,38 @@ namespace Spor.UI.Controllers
             }
             
             ViewBag.Durum = m._Ekle(k, "Kullanıcı", LoginID());
+            return RedirectToAction("Sporcular","Kullanici");
+        }
+        [Authorize(Roles = "Moderatör")]
+        public ActionResult SporcuDuzenle()
+        {
+            MyDbContext db = new MyDbContext();
+            var query = db.Gruplar.Where(x => x.KullaniciAdi == User.Identity.Name).Select(c => new { c.id, c.GrupAdi });
+            ViewBag.Grup = new SelectList(query.AsEnumerable(), "id", "GrupAdi");
             return View();
+        }
+        [Authorize(Roles = "Moderatör")]
+        [HttpPost]
+        public ActionResult SporcuDuzenle(Kullanici k,string Onay, HttpPostedFileBase resim)
+        {
+            BL_Kullanici m = new BL_Kullanici();
+            if (resim != null)
+            {
+                WebImage img = new WebImage(resim.InputStream);
+                FileInfo fotoinfo = new FileInfo(resim.FileName);
+                string newfoto = Guid.NewGuid().ToString() + fotoinfo.Extension;
+                img.Resize(800, 350);
+                string yol = Server.MapPath("/Uploads/Kullanici/" + newfoto);
+                img.Save(yol);
+                k.Resim = "/Uploads/Kullanici/" + newfoto;
+            }
+            if (Onay == "on")
+            {
+                k.Onay = true;
+            }
+            string[] Rolu = Roles.GetRolesForUser(k.KullaniciAdi);
+            ViewBag.Durum = m._Duzenle(k);
+            return RedirectToAction("Index", "Kullanici");
         }
         public string LoginID()
         {

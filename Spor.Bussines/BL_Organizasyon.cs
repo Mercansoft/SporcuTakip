@@ -44,6 +44,7 @@ namespace Spor.Bussines
                 model.SalonID = o.SalonID;
                 model.Tarih = o.Tarih;
                 model.Yer = o.Yer;
+                model.GrupID = o.GrupID;
                 db.SaveChanges();
                 durum = "Başarıyla Güncellendi.";
             }

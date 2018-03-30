@@ -16,11 +16,6 @@ namespace Spor.UI.Controllers
         [Authorize(Roles = "Admin,Moderatör")]
         public ActionResult Index()
         {
-            //using (MyDbContext db = new MyDbContext())
-            //{
-            //    var model = db.Salonlar.Where(x => x.KullaniciAdi == User.Identity.Name).ToList();
-            //    return View(model);
-            //}
             return View(_ClsSalon._Liste(User.Identity.Name.ToString()));
         }
         [Authorize(Roles = "Admin,Moderatör")]
