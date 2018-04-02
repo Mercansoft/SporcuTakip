@@ -73,9 +73,9 @@ namespace Spor.UI.Controllers
         {
             string durum= _ClsOrganizasyon._Guncelle(o);
             ViewData["Durum"] = "<script>alert('" + durum + "');</script>";
-           // Session["Durum"]= "<script>alert('"+ durum + "');</script>";
-
-            return Redirect("/Organizasyon/Duzenle/"+o.id);
+            // Session["Durum"]= "<script>alert('"+ durum + "');</script>";
+            return RedirectToAction("Index","Organizasyon");
+          //  return Redirect("/Organizasyon/Duzenle/"+o.id);
         }
     }
 }

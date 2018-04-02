@@ -16,10 +16,7 @@
                     <div class="x_title">
                         <h2>Sporcu Güncelleme Paneli <small>Sporcu</small></h2><br />
                         <p style="color:red; font-size:large">
-                            @if (ViewBag.Durum != null)
-                            {
-                                @Html.Raw(ViewBag.Durum)
-                            }
+
                         </p>
                         <ul class="nav navbar-right panel_toolbox">
                             <li>
@@ -121,15 +118,15 @@
                             <div class="form-group">
                                 <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Gizli Soru</label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input id="middle-name" class="form-control col-md-7 col-xs-12" type="text" name="GizliSoru" value="@Model.GizliSoru">
+                                    <input id="middle-name" class="form-control col-md-7 col-xs-12" type="text" name="GizliSoru" readonly="readonly" value="@Model.GizliSoru">
                                 </div>
                             </div>
-                            <div class="form-group">
+                            @*<div class="form-group">
                                 <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Gizli Cevap</label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <input id="middle-name" class="form-control col-md-7 col-xs-12" type="text" name="GizliCevap" value="@Model.GizliCevap">
                                 </div>
-                            </div>
+                            </div>*@
                             <div class="form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">Onay Durumu</label>
                                 <div class="col-md-9 col-sm-9 col-xs-12">

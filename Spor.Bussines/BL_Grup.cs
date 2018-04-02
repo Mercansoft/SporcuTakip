@@ -36,7 +36,8 @@ namespace Spor.Bussines
         {
             Grup model = db.Gruplar.Find(s.id);
             model.GrupAdi = s.GrupAdi;
-            db.Entry(model).State = EntityState.Modified;
+            db.SaveChanges();
+          //  db.Entry(model).State = EntityState.Modified;
 
         }
         public Grup _GetirID(int id) { Grup model = db.Gruplar.Find(id); return model; }

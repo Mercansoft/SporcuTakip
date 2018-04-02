@@ -46,6 +46,7 @@
                                 <tr>
                                     <th>Organizasyon Adı</th>
                                     <th>Salon</th>
+                                    <th>Takım Adı</th>
                                     <th>Tarih</th>
                                     <th>Saat</th>
                                     <th>Organizasyon Durumu</th>
@@ -58,18 +59,19 @@
                                 <tr>
                                     <td>@item.OrganizasyonAdi</td>
                                     <td>@item.Salonlar.SalonAdi</td>
+                                    <td>@item.Gruplar.GrupAdi</td>
                                     <td>@item.Tarih.ToShortDateString()</td>
                                     <td>@item.Saat</td>
                                     <td>
 
                                         @{
-        if (item.Durum)
-        {
-                                        <center><p><button type="button" class="btn btn-success btn-xs">Aktif</button></p></center>
+            if (item.Durum)
+            {
+                                <center><p><button type="button" class="btn btn-success btn-xs">Aktif</button></p></center>
 }
 else
 {
-                                    <p> <button type="button" class="btn btn-danger btn-xs">Pasif</button></p>
+                                <p> <button type="button" class="btn btn-danger btn-xs">Pasif</button></p>
 }
                                         }
                                     </td>

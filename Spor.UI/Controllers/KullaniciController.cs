@@ -54,7 +54,7 @@ namespace Spor.UI.Controllers
             }
 
         }
-        [Authorize(Roles = "Admin,Moderatör")]
+        [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
             MembershipUserCollection user = Membership.GetAllUsers();
@@ -86,7 +86,7 @@ namespace Spor.UI.Controllers
             List<string> roller = Roles.GetAllRoles().ToList();
             return View(roller);
         }
-        [Authorize(Roles = "Admin,Moderatör")]
+        [Authorize(Roles = "Admin")]
         public ActionResult Duzenle(string id)
         {
             using (MyDbContext db = new MyDbContext())
@@ -198,17 +198,18 @@ namespace Spor.UI.Controllers
                 return View();
             }
         }
-        [Authorize(Roles = "Admin,Moderatör")]
+        [Authorize(Roles = "Moderatör")]
         public ActionResult Sporcular()
         {
-            using (MyDbContext db = new MyDbContext())
-            {
+            MyDbContext db = new MyDbContext();
+            //using (MyDbContext db = new MyDbContext())
+            //{
                 var sporcu = db.Kullanicilar.Where(x => x.AdminName == User.Identity.Name).ToList();
                 return View(sporcu);
-            }
+            //}
             
         }
-        [Authorize(Roles = "Admin,Moderatör")]
+        [Authorize(Roles = "Moderatör")]
         public ActionResult SporcuEkle()
         {
             MyDbContext db = new MyDbContext();
@@ -216,7 +217,7 @@ namespace Spor.UI.Controllers
             ViewBag.Grup = new SelectList(query.AsEnumerable(), "id", "GrupAdi");
             return View();
         }
-        [Authorize(Roles = "Admin,Moderatör")]
+        [Authorize(Roles = "Moderatör")]
         [HttpPost]
         public ActionResult SporcuEkle(Kullanici k, HttpPostedFileBase resim)
         {
@@ -236,12 +237,17 @@ namespace Spor.UI.Controllers
             return RedirectToAction("Sporcular","Kullanici");
         }
         [Authorize(Roles = "Moderatör")]
-        public ActionResult SporcuDuzenle()
+        public ActionResult SporcuDuzenle(string id)
         {
             MyDbContext db = new MyDbContext();
+
             var query = db.Gruplar.Where(x => x.KullaniciAdi == User.Identity.Name).Select(c => new { c.id, c.GrupAdi });
             ViewBag.Grup = new SelectList(query.AsEnumerable(), "id", "GrupAdi");
-            return View();
+
+            
+            Kullanici k = db.Kullanicilar.Where(z => z.KullaniciAdi == id).SingleOrDefault();
+            ViewBag.Rol = Roles.GetAllRoles().ToList();
+            return View(k);
         }
         [Authorize(Roles = "Moderatör")]
         [HttpPost]
@@ -264,7 +270,7 @@ namespace Spor.UI.Controllers
             }
             string[] Rolu = Roles.GetRolesForUser(k.KullaniciAdi);
             ViewBag.Durum = m._Duzenle(k);
-            return RedirectToAction("Index", "Kullanici");
+            return RedirectToAction("Sporcular", "Kullanici");
         }
         public string LoginID()
         {
@@ -273,12 +279,21 @@ namespace Spor.UI.Controllers
             //string LoginID = mu.ProviderUserKey.ToString();
             return LoginUserName;
         }
-        public ActionResult Profil() {
-            using (MyDbContext db = new MyDbContext())
+        public ActionResult Profil()
+        {
+            MyDbContext db = new MyDbContext();
+            try
             {
+                
+
                 Kullanici k = db.Kullanicilar.Where(z => z.KullaniciAdi == User.Identity.Name).SingleOrDefault();
                 return View(k);
-            }}
+            }
+            catch (Exception)
+            {
+                return View();
+            }
+        }
         [HttpPost]
         public ActionResult Profil(Kullanici k, HttpPostedFileBase resim)
         {
