@@ -24,6 +24,8 @@ namespace Spor.UI
                     if (!Roles.RoleExists("Admin"))
                     {
                         Roles.CreateRole("Admin");
+                        Roles.CreateRole("Moderatör");
+                        Roles.CreateRole("Kullanıcı");
                     }
                     if (Membership.GetUser("Admin") == null)
                     {

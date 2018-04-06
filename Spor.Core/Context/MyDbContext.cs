@@ -11,10 +11,13 @@ namespace Spor.Core.Context
 {
     public class MyDbContext : DbContext
     {
-        public MyDbContext() {
+        public MyDbContext() : base("name=MyDbContext")
+        {
             //Database.SetInitializer<MyDbContext>(new DropCreateDatabaseIfModelChanges<MyDbContext>());
             //Database.SetInitializer(new DropCreateDatabaseAlways<MyDbContext>());
+            // Database.SetInitializer<MyDbContext>(new DropCreateDatabaseIfModelChanges<MyDbContext>());
             //Database.Initialize(true);
+            base.Configuration.ProxyCreationEnabled = false;
 
         }
         public DbSet<Kullanici> Kullanicilar { get; set; }
