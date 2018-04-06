@@ -34,7 +34,16 @@ namespace Spor.UI
                     }
                     MembershipUser mu = Membership.GetUser("Admin");
                     Kullanici Kullanicis = new Kullanici();
+                    Grup grups = new Grup();
                     int say = db.Kullanicilar.ToList().Count;
+                    int gsay = db.Gruplar.ToList().Count;
+                    if (gsay==0)
+                    {
+                        grups.GrupAdi = "AdminGroup";
+                        grups.KullaniciAdi= mu.UserName;
+                        db.Gruplar.Add(grups);
+                        db.SaveChanges();
+                    }
                     if (say==0)
                     {
                         Kullanicis.KullaniciAdi = mu.UserName;
@@ -45,6 +54,7 @@ namespace Spor.UI
                         Kullanicis.GizliSoru = mu.PasswordQuestion;
                         Kullanicis.GizliCevap = "admincevap";
                         Kullanicis.Onay = true;
+                        Kullanicis.GrupID = 1;
                         Kullanicis.Tarih = Convert.ToDateTime(DateTime.Now);
                         Kullanicis.Adres = "adres";
                         Kullanicis.DogumTarihi = Convert.ToDateTime(DateTime.Now);
