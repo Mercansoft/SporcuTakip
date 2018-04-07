@@ -202,12 +202,8 @@ namespace Spor.UI.Controllers
         public ActionResult Sporcular()
         {
             MyDbContext db = new MyDbContext();
-            //using (MyDbContext db = new MyDbContext())
-            //{
-                var sporcu = db.Kullanicilar.Where(x => x.AdminName == User.Identity.Name).ToList();
-                return View(sporcu);
-            //}
-            
+            var sporcu = db.Kullanicilar.Where(x => x.AdminName == User.Identity.Name).ToList();
+            return View(sporcu);
         }
         [Authorize(Roles = "Moderatör")]
         public ActionResult SporcuEkle()

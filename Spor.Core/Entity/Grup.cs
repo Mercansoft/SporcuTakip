@@ -12,7 +12,7 @@ namespace Spor.Core.Entity
         public string GrupAdi { get; set; }
         public string KullaniciAdi { get; set; }
 
-        public virtual List<Kullanici> Kullanicilar { get; set; }
-        public virtual List<Organizasyon> Organizasyonlar { get; set; }
+        public virtual ICollection<Kullanici> Kullanicilar { get; set; }
+        public virtual ICollection<Organizasyon> Organizasyonlar { get; set; }
     }
 }

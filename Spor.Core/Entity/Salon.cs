@@ -12,6 +12,6 @@ namespace Spor.Core.Entity
         public string SalonAdi { get; set; }
         public string KullaniciAdi { get; set; }
 
-        public virtual List<Organizasyon> Organizasyonlar { get; set; }
+        public virtual ICollection<Organizasyon> Organizasyonlar { get; set; }
     }
 }

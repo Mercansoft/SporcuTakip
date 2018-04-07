@@ -16,8 +16,8 @@ namespace Spor.Core.Context
             //Database.SetInitializer<MyDbContext>(new DropCreateDatabaseIfModelChanges<MyDbContext>());
             //Database.SetInitializer(new DropCreateDatabaseAlways<MyDbContext>());
             // Database.SetInitializer<MyDbContext>(new DropCreateDatabaseIfModelChanges<MyDbContext>());
-            //Database.Initialize(true);
-            base.Configuration.ProxyCreationEnabled = false;
+           Database.Initialize(true);
+           // this.Configuration.ProxyCreationEnabled = false;
 
         }
         public DbSet<Kullanici> Kullanicilar { get; set; }

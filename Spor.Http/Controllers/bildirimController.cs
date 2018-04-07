@@ -15,32 +15,30 @@ namespace Spor.Http.Controllers
     public class bildirimController : ApiController
     {
         MyDbContext db = new MyDbContext();
-        public HttpResponseMessage GetAll(string isim)
-        {
-            Organizasyon model = new Organizasyon();
-            try
-            {
-                Kullanici users = db.Kullanicilar.Where(x => x.KullaniciAdi == isim).FirstOrDefault();
-                model = db.Organizasyonlar.Where(x => x.GrupID == users.GrupID && x.Durum == true).FirstOrDefault();
-                return Request.CreateResponse(HttpStatusCode.OK, model);
-            }
-            catch (Exception)
-            {
-                return Request.CreateResponse(HttpStatusCode.Found, "Böyle Bir KAyıt Bulunamadı.");
-            }
-        }
-        //public List<Organizasyon> Get()
+        //public HttpResponseMessage GetAll(string isim)
         //{
-        //    // Kullanici users = db.Kullanicilar.Where(x => x.KullaniciAdi == isim).FirstOrDefault();
-        //    using (MyDbContext data = new MyDbContext())
+        //    Organizasyon model = new Organizasyon();
+        //    try
         //    {
-        //        var model = data.Organizasyonlar.ToList();
-        //        return model;
+        //        Kullanici users = db.Kullanicilar.Where(x => x.KullaniciAdi == isim).FirstOrDefault();
+        //        model = db.Organizasyonlar.Where(x => x.GrupID == users.GrupID && x.Durum == true).FirstOrDefault();
+        //        return Request.CreateResponse(HttpStatusCode.OK, model);
         //    }
-
+        //    catch (Exception)
+        //    {
+        //        return Request.CreateResponse(HttpStatusCode.Found, "Böyle Bir KAyıt Bulunamadı.");
+        //    }
         //}
         public List<Organizasyon> Get()
         {
+            db.Configuration.ProxyCreationEnabled = false;
+            var users = db.Organizasyonlar.ToList();
+            return users;
+
+        }
+        public List<Organizasyon> GetOrganizasyonlar(bool durum)
+        {
+            db.Configuration.ProxyCreationEnabled = false;
             //List<ApiOrganizasyon> listOfUsers = new List<ApiOrganizasyon>();
             //ApiOrganizasyon userModel = new ApiOrganizasyon();
             //foreach (var user in db.Organizasyonlar)
@@ -50,8 +48,23 @@ namespace Spor.Http.Controllers
             //    userModel.Tarih = user.Tarih;
             //    listOfUsers.Add(userModel);
             //}
-            var users = db.Organizasyonlar.ToList();
-            return users;
+                var users = db.Organizasyonlar.Where(x => x.Durum == durum).ToList();
+                return users;
+        }
+        public Organizasyon GetOrganizasyonUser(string isim)
+        {
+            db.Configuration.ProxyCreationEnabled = false;
+            Organizasyon model = new Organizasyon();
+            try
+            {
+                Kullanici users = db.Kullanicilar.Where(x => x.KullaniciAdi == isim).FirstOrDefault();
+                model = db.Organizasyonlar.Where(x => x.GrupID == users.GrupID && x.Durum == true).FirstOrDefault();
+            }
+            catch (Exception)
+            {
+                
+            }
+            return model;
 
         }
         //public HttpResponseMessage Get(string isim)
@@ -71,25 +84,6 @@ namespace Spor.Http.Controllers
         //    {
         //        return Request.CreateResponse(HttpStatusCode.Found, "Böyle Bir KAyıt Bulunamadı.");
         //    }
-        //}
-        //public List<Organizasyon> GetAll()
-        //{
-        //    using (MyDbContext db = new MyDbContext())
-        //    {
-        //        List<ApiOrganizasyon> listOfUsers = new List<ApiOrganizasyon>();
-        //        ApiOrganizasyon userModel = new ApiOrganizasyon();
-        //        foreach (var user in db.Organizasyonlar)
-        //        {
-        //            userModel.OrganizasyonAdi= user.OrganizasyonAdi;
-        //            userModel.Saat = user.Saat;
-        //            userModel.Tarih = user.Tarih;
-        //            listOfUsers.Add(userModel);
-        //        }
-        //        var users = listOfUsers.ToList();
-        //        return users;
-
-        //    }
-
         //}
         //public HttpResponseMessage Get()
         //{
