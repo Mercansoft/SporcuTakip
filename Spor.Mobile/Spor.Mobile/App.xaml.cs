@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Spor.Mobile.Views;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,7 +14,7 @@ namespace Spor.Mobile
 		{
 			InitializeComponent();
 
-			MainPage = new Spor.Mobile.MainPage();
+			MainPage = new MyContentPage();
 		}
 
 		protected override void OnStart ()

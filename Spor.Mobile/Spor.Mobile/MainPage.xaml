@@ -4,8 +4,7 @@
              xmlns:local="clr-namespace:Spor.Mobile"
              x:Class="Spor.Mobile.MainPage">
 
-	<Label Text="sssss to Xamarin.Forms!" 
+    <Label Text="sssss to Xamarin.Forms!" 
            VerticalOptions="Center" 
            HorizontalOptions="Center" />
-
 </ContentPage>
