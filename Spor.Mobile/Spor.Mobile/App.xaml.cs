@@ -14,7 +14,7 @@ namespace Spor.Mobile
 		{
 			InitializeComponent();
 
-			MainPage = new MyContentPage();
+			MainPage = new MyMasterPage();
 		}
 
 		protected override void OnStart ()

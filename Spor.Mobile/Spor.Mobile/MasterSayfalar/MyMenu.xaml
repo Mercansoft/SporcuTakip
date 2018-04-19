@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Spor.Mobile.MasterSayfalar.MyMenu">
+    <StackLayout BackgroundColor="White>
+                 
+    <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+        <Image Source="olimpiyat.jpg" VerticalOptions="Center" HorizontalOptions="Center"</Image>
+    </StackLayout>
+        
+        <StackLayout Padding="10">
+            <Label Text="Eğitimler" TextColor="Black"></Label>
+            <Label Text="Başarı Hikayeleri" TextColor="Black"></Label>
+            <Label Text="Açık AkademiTV" TextColor="Black"></Label>
+            <Label Text="İlk 10" TextColor="Black"></Label>
+            <Label Text="Soru-Cevap" TextColor="Black"></Label>
+        </StackLayout>
+    </StackLayout>
+</ContentPage>

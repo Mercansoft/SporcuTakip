@@ -14,6 +14,8 @@ namespace Spor.Mobile.Views
             _lblPage.FontSize = 30;
             _lblPage.HorizontalOptions = LayoutOptions.Center;
             _lblPage.VerticalOptions = LayoutOptions.Center;
+
+            Content = _lblPage;
         }
 
     }
